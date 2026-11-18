@@ -1,2 +1,2 @@
-# lattice
+# The lattice
 SH lattice generator with JAX.

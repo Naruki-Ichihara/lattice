@@ -1,0 +1,22 @@
+services:
+  lattice:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        FEAX_REF: "main"
+    image: lattice:latest
+    container_name: lattice
+    tty: true
+    working_dir: /workspace/
+    volumes:
+      - ./:/workspace
+    shm_size: 4gb
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]

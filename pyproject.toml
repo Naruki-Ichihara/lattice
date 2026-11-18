@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lattice"
+version = "0.0.1"
+description = "Swift-Hohenberg lattice generator and homogenization with JAX, on top of feax."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Naruki-Ichihara", email = "ichihara.naruki@nihon-u.ac.jp"},
+]
+keywords = ["JAX", "lattice", "Swift-Hohenberg", "homogenization", "finite-element", "GPU"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+
+# JAX itself is not listed: install jax / jax[cuda13] first, or use the NVCR
+# container's JAX (see Dockerfile). feax brings the FE solver (homogenization)
+# and, through its cuda extras, cuDSS.
+dependencies = [
+    "feax>=0.10.0",
+    "exponax>=0.2.1",
+    "equinox",
+    "numpy",
+]
+
+[project.optional-dependencies]
+# figures, iso-surfaces and STL export
+plot = [
+    "matplotlib",
+    "scikit-image",
+]
+dev = [
+    "pytest",
+    "ruff",
+]
+
+[project.urls]
+Repository = "https://github.com/Naruki-Ichihara/lattice.git"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["lattice*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B"]
+ignore = ["E501"]
